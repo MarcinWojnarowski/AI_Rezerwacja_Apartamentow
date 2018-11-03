@@ -1,5 +1,5 @@
 from django.apps import AppConfig
 
 
-class RezerwacjaapartamentowConfig(AppConfig):
+class AccessConfig(AppConfig):
     name = 'accounts'
