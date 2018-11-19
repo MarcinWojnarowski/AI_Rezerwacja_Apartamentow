@@ -4,7 +4,6 @@ from accounts.models import MyUser
 
 
 class CustomUserCreationForm(UserCreationForm):     #formularz do tworzenia nowego użytkownika
-   # email = forms.EmailField(required=True)
 
     class Meta:
         model = MyUser

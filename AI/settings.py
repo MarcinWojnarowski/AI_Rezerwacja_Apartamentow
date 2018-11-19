@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'accounts.apps.AccessConfig', #nazwa klasy z pliku apps.py
+    'bookings',
 ]
 
 MIDDLEWARE = [

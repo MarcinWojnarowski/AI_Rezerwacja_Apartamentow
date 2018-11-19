@@ -3,13 +3,8 @@
 {% block title %}Rezerwacja Apartamentów{% endblock %}
 
 {% block content %}
-{% if user.is_authenticated %}
-  Witaj {{ user.username }}!
-  <p><a href="{% url 'logout' %}" class="btn btn-primary">Wyloguj</a></p>
-{% else %}
-  <p>Aby móc zarezerwować apartament lub udostępnić apartament do wynajęcia, muszisz być zalogowany!!!</p>
-  <a href="{% url 'login' %}" class="btn btn-primary">Zaloguj się</a>
-  <p> Jeśli nie posiadasz jeszcze konta na naszej stronie <a href="{% url 'signup' %}" class="btn btn-primary">Zarejestruj się</a></p>
-    <p> Jeśli jesteś administratorem kliknij <a href="/admin/">tutaj</a></p>
-{% endif %}
+    <div class="container">
+        <p>Aby móc zarezerwować apartament lub udostępnić apartament do wynajęcia, muszisz być zalogowany!!!</p>
+        <p> Jeśli jesteś administratorem kliknij <a href="/admin/">tutaj</a></p>
+    </div>
 {% endblock %}
