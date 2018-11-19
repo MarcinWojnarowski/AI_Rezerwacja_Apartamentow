@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %} Lista apartamentów {% endblock %}
+{% block content %}
+    <h1 style="margin-top: 0">Lista wszystkich zarejestrowanych apartamentów</h1>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Miejscowość</th>
+            <th>Adres</th>
+            <th>Ilość miejsc</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for apartament in object_list %}
+            <tr>
+                <td><a href="{% url 'apartament_detail' apartament.id %}">{{ apartament.miejscowosc }}</a></td>
+                <td><a href="{% url 'apartament_detail' apartament.id %}">{{ apartament.adres }}</a></td>
+                <td>{{ apartament.ilosc_miejsc }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %} Apartament{% endblock %}
+{% block content %}
+    <ul>
+        <li><strong>Miejscowość:</strong> {{ apartament.miejscowosc }}</li>
+        <li><strong>Adres:</strong> {{ apartament.adres }}</li>
+        <li><strong>Ilość miejsc:</strong> {{ apartament.ilosc_miejsc }}</li>
+        <li><strong>Cena za dobę:</strong> {{ apartament.cena_za_dobe }} zł</li>
+        <li><strong>Opis:</strong> {{ apartament.opis }}</li>
+        <li><strong>Internet:</strong> {% if apartament.internet %} TAK {% else %} NIE {% endif %}</li>
+        <li><strong>Telewizor:</strong> {% if apartament.telewizor %} TAK {% else %} NIE {% endif %}</li>
+        <li><strong>Basen:</strong> {% if apartament.basen %} TAK {% else %} NIE {% endif %}</li>
+        <li><strong>Sauna:</strong> {% if apartament.sauna %} TAK {% else %} NIE {% endif %}</li>
+        <li><strong>Właściciel:</strong> {{ apartament.wlasciciel.get_full_name }}</li>
+    </ul>
+
+{% endblock %}

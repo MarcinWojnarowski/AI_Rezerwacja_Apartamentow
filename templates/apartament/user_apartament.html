@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %} Moje apartamenty {% endblock %}
+{% block content %}
+
+    <h1 style="margin-top: 0">Poniżej znajduje się lista Twoich apartamentów</h1>
+    <ul>
+        {% for apartament in object_list %}
+            {% if apartament.wlasciciel.id == user.id %}
+                <li><a href="{% url 'apartament_detail' apartament.id %}">
+                    Adres: {{ apartament.miejscowosc }} {{ apartament.adres }},
+                    Ilość miejsc: {{ apartament.ilosc_miejsc }}</a></li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+
+{% endblock %}

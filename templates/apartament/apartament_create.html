@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %}Nowy apartament{% endblock %}
+{% block content %}
+
+    {% if user.is_authenticated %}
+        <h2>Dodaj apartament</h2>
+        <form method="POST" action="">
+            {% csrf_token %}
+            {{ form.as_p }} {# as_p, powoduje zamknięcie formularza w znaczniku <p>, czyli kolejne pola będą znajdowały się w nowej lini #}
+            <input type="submit" class="btn btn-success" value="Zapisz" name="apartament_save">
+        </form>
+
+    {% else %}
+        <p>Aby dodać apartament musisz być zalogowany w serwisie!</p>
+        <a href="{% url 'login' %}" class="btn btn-primary">Logowanie</a>
+        <a href="{% url 'signup' %}" class="btn btn-primary">Rejestracja</a>
+    {% endif %}
+{% endblock %}
