@@ -35,3 +35,4 @@ def szczegoly_apartamentu(request, pk):
         if request.method == 'POST':
             return HttpResponseRedirect(apartament.get_absolute_url())
     return render(request, 'apartament/apartament_detail.html', {'apartament': apartament})
+
