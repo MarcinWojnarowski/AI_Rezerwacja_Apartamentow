@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %} - rezerwacje {% endblock %}
+{% block content %}
+
+    <h2>Apartament: {{ apartment.adres }} - rezerwacje</h2>
+    <div id='calendar'></div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#calendar').fullCalendar({
+                locale: 'pl',
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'month,agendaWeek,agendaDay,listWeek'
+                },
+                navLinks: true, // can click day/week names to navigate views
+                editable: true,
+                eventLimit: true, // allow "more" link when too many events,
+                eventTextColor: '#fff',
+                events: {{ rez_json|safe }}     // gdyby nie było safe, to django źle interpretuje znaki specjalne występujące w json
+            });
+        });
+    </script>
+    <h3>Dodaj rezerwacje:</h3>
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label>Data początkowa</label>
+            <input type="date" name="data_od" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label>Ilość dni</label>
+            <select name="days" class="form-control">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6</option>
+                <option>7</option>
+                <option>8</option>
+                <option>9</option>
+                <option>10</option>
+                <option>11</option>
+                <option>12</option>
+                <option>13</option>
+                <option>14</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Rezerwuj</button>
+    </form>
+    <br>
+    <br>
+    <br>
+    <br>
+{% endblock %}

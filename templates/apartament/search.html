@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %} Szuakaj apartamentu {% endblock %}
+{% load widget_tweaks %}
+{% block content %}
+
+    <h1 style="margin-top: 0">Wyszukaj apartament na podstawie jego parametrów</h1>
+    <form method="get">
+        <div class="well">
+            <div class="row">
+                <div class="form-group col-sm-4 col-md-3">
+                    {{ filter.form.miejscowosc.label_tag }}
+                    {% render_field filter.form.miejscowosc class="form-control" %}
+                </div>
+                <div class="form-group col-sm-4 col-md-3">
+                    {{ filter.form.adres.label_tag }}
+                    {% render_field filter.form.adres class="form-control" %}
+                </div>
+                <div class="form-group col-sm-4 col-md-3">
+                    {{ filter.form.ilosc_miejsc.label_tag }}
+                    {% render_field filter.form.ilosc_miejsc class="form-control" %}
+                </div>
+                <div class="form-group col-sm-4 col-md-3">
+                    {{ filter.form.cena_za_dobe.label_tag }}
+                    {% render_field filter.form.cena_za_dobe class="form-control" %}
+                </div>
+                <div class="form-group col-sm-4 col-md-3">
+                    {{ filter.form.internet.label_tag }}
+                    {% render_field filter.form.internet class="form-control" %}
+                </div>
+                <div class="form-group col-sm-4 col-md-3">
+                    {{ filter.form.telewizor.label_tag }}
+                    {% render_field filter.form.telewizor class="form-control" %}
+                </div>
+                <div class="form-group col-sm-4 col-md-3">
+                    {{ filter.form.basen.label_tag }}
+                    {% render_field filter.form.basen class="form-control" %}
+                </div>
+                <div class="form-group col-sm-4 col-md-3">
+                    {{ filter.form.sauna.label_tag }}
+                    {% render_field filter.form.sauna class="form-control" %}
+                </div>
+            </div>
+            <button type="submit" class="btn btn-success">
+                <span class="glyphicon glyphicon-search"></span> Szukaj
+            </button>
+        </div>
+    </form>
+    <ul>
+        <p></p>
+        <h4>Lista apartamentów spełniających wskazane wymagania:</h4>
+        {% for apartament in filter.qs %}
+            <li>
+                <a href="{% url 'apartament_detail' apartament.id %}">
+                    {{ apartament.miejscowosc }},
+                    {{ apartament.adres }},
+                    {{ apartament.cena_za_dobe }} zł</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

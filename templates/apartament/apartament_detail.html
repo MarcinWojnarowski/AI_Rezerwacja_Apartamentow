@@ -13,5 +13,5 @@
         <li><strong>Sauna:</strong> {% if apartament.sauna %} TAK {% else %} NIE {% endif %}</li>
         <li><strong>Właściciel:</strong> {{ apartament.wlasciciel.get_full_name }}</li>
     </ul>
-
+    <a href="{% url 'rezerwacja' apartament.id %}" class="btn btn-dark">Rezerwuj</a>
 {% endblock %}

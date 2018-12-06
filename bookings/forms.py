@@ -4,7 +4,7 @@ from bookings import models
 
 class ApartamentForm(forms.ModelForm):
 
-    class Meta: # wybiera pola które będą wyświetlane w formularzu, podczas tworzenia nowego apartamentu
+    class Meta:  # pola które będą wyświetlane w formularzu, podczas tworzenia nowego apartamentu
         model = models.Apartament
         fields = [
             'miejscowosc',

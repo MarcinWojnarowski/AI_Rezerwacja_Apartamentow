@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %} Rezerwacja {% endblock %}
+{% block content %}
+
+    <h1>Rezerwacje moich apartamentów</h1>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Apartament</th>
+            <th>Użytkownik</th>
+            <th>Data od</th>
+            <th>Data do</th>
+            <th>Status</th>
+            <th>Zmień status</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for rezerwacja in rezerwacje %}
+            <tr>
+                <td>
+                    <a href="{% url 'apartament_detail' rezerwacja.apartament.id %}">{{ rezerwacja.apartament.adres }}</a>,
+                    {{ rezerwacja.apartament.miejscowosc }}</td>
+                <td>{{ rezerwacja.kto.username }}</td>
+                <td>{{ rezerwacja.rezerwacja_od }}</td>
+                <td>{{ rezerwacja.rezerwacja_do }}</td>
+                <td>{{ rezerwacja.status }}</td>
+                <td>
+                    <form method="POST" action="">
+                        {% csrf_token %}
+                        <input type="hidden" name="zmienStatus" value="{{ rezerwacja.id }}">
+                        <div class="input-group">
+                            <select class="form-control" name="status">
+                                <option value="niezatwierdzony">Niezatwierdzony</option>
+                                <option value="zatwierdzony">Zatwierdź</option>
+                                <option value="odrzucony">Odrzuć</option>
+                            </select>
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="submit">Zapisz</button>
+                            </div>
+                        </div>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

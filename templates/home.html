@@ -1,10 +1,29 @@
 {% extends 'base.html' %}
+{% block title %}Home{% endblock %}
+{% block homepage %}
 
-{% block title %}Rezerwacja Apartamentów{% endblock %}
-
-{% block content %}
-    <div class="container">
-        <p>Aby móc zarezerwować apartament lub udostępnić apartament do wynajęcia, muszisz być zalogowany!!!</p>
-        <p> Jeśli jesteś administratorem kliknij <a href="/admin/">tutaj</a></p>
+    <div style="background: url('https://i.imgur.com/Ih038LG.jpg');background-repeat: no-repeat;background-size: cover;">
+        <div class="container py-5">
+            <h1 class="display-4 text-white text-center mt-5">Rezerwacja apartamentów online</h1>
+            <form action="/bookings/search/">
+                <div class="row mb-3">
+                    <div class="col-10">
+                        <input type="text" name="miejscowosc" value="" class="form-control btn btn-outline-light"
+                               placeholder="Wpisz nazwę miejscowości..."></div>
+                    <div class="col-2">
+                        <button type="submit" class="btn btn-outline-light w-100">Szukaj</button>
+                    </div>
+                </div>
+            </form>
+            <div class="text-center text-white">
+                <p>Aby móc zarezerwować apartament lub udostępnić apartament do wynajęcia, muszisz być zalogowany!!!</p>
+                <p> Jeśli jesteś administratorem kliknij <a href="/admin/">tutaj</a></p>
+            </div>
+        </div>
     </div>
+    <style>
+        input[name=miejscowosc]::placeholder {
+            color: #ffff;
+        }
+    </style>
 {% endblock %}

@@ -26,7 +26,8 @@ SECRET_KEY = '%a#wyd6lur43mjksgp-f#c*#2$9z)9=0#d-!b^4(mgakugi8k4'
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
+#ALLOWED_HOSTS = ['rezerwacjaapartamentow.pythonanywhere.com']
+#STATIC_ROOT = '/home/RezerwacjaApartamentow/AI_Rezerwacja_Apartamentow/static'
 
 # Application definition
 
@@ -39,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'accounts.apps.AccessConfig', #nazwa klasy z pliku apps.py
     'bookings',
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [
@@ -120,6 +122,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
 # przekierowanie do strony domowej
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'

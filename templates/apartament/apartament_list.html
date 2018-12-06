@@ -8,6 +8,7 @@
         <tr>
             <th>Miejscowość</th>
             <th>Adres</th>
+            <th>Cena za dobę</th>
             <th>Ilość miejsc</th>
         </tr>
         </thead>
@@ -16,6 +17,7 @@
             <tr>
                 <td><a href="{% url 'apartament_detail' apartament.id %}">{{ apartament.miejscowosc }}</a></td>
                 <td><a href="{% url 'apartament_detail' apartament.id %}">{{ apartament.adres }}</a></td>
+                <td>{{ apartament.cena_za_dobe }} zł</td>
                 <td>{{ apartament.ilosc_miejsc }}</td>
             </tr>
         {% endfor %}
