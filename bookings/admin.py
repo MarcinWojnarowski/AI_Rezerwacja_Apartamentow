@@ -1,5 +1,5 @@
 from django.contrib import admin
-from bookings.models import Apartament, Rezerwacja
+from bookings.models import Apartament, Rezerwacja, Komentarz
 
 
 class ApartamentAdmin(admin.ModelAdmin):
@@ -41,5 +41,30 @@ class RezerwacjaAdmin(admin.ModelAdmin):
     wlasciciel.short_description = 'Właściciel'
 
 
+class KomentarzeAdmin(admin.ModelAdmin):
+    list_display = [
+        'autor_kom',
+        'apartament_adres',
+        'dodano_dnia',
+        'tresc',
+        'odpowiedz',
+        'odpowiedz_data'
+    ]
+
+    def apartament_adres(self, obj):
+        return obj.apartament.miejscowosc+' '+obj.apartament.adres
+
+    def autor_kom(self, obj):
+        return obj.autor.username
+
+    def tresc(self, obj):
+        return obj.tresc_kom
+
+    apartament_adres.short_description = 'Skomentowany apartament'
+    autor_kom.short_description = 'Autor'
+    tresc.short_description = 'Treść'
+
+
 admin.site.register(Apartament, ApartamentAdmin)
 admin.site.register(Rezerwacja, RezerwacjaAdmin)
+admin.site.register(Komentarz, KomentarzeAdmin)

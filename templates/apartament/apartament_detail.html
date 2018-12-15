@@ -14,4 +14,48 @@
         <li><strong>Właściciel:</strong> {{ apartament.wlasciciel.get_full_name }}</li>
     </ul>
     <a href="{% url 'rezerwacja' apartament.id %}" class="btn btn-dark">Rezerwuj</a>
+    <a href="{% url 'dodaj_komentarz' apartament.id %}" class="btn btn-dark">Dodaj komentarz</a>
+
+    <p><h3>Komentarze:</h3></p>
+    {% for komentarz in komentarze %}
+        <div class="card mb-3">
+            <div class="card-body">
+                <small class="float-right">{{ komentarz.dodano_dnia }}</small>
+                <h5 class="card-title">{{ komentarz.autor.username }}:</h5>
+                <p class="card-text">{{ komentarz.tresc_kom }}</p>
+
+                {% if komentarz.odpowiedz != None %} <!-- jeśli właściciel odpowiedział na komentarz -->
+                    <strong> Odpowiedź właściciela ({{ komentarz.odpowiedz_data }}):</strong> {{ komentarz.odpowiedz }}
+                {% elif apartament.wlasciciel.id == user.id %}
+                    <!-- jeśli jesteś włąścicielem to wyświetla się przycisk "odpwiedz na kom" -->
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#kom{{ komentarz.id }}">
+                        Odpowiedz na komentarz </button>
+                    <!-- okienko z odpowiedzią na komentarz (wszystko z bootstapa) -->
+                    <div class="modal fade" id="kom{{ komentarz.id }}" tabindex="-1" role="dialog">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Odpowiedz na komentarz</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form method="POST" action="">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="kom_id" value="{{ komentarz.id }}">
+                                        <!-- odpowiedź na komentarz o tym id -->
+                                        <textarea class="form-control" name="odpowiedz" value=""
+                                                  placeholder="Wpisz odpowiedź na komentarz" required></textarea><br>
+                                        <input type="submit" class="btn btn-success" value="Dodaj"
+                                               name="odpowiedz_na_kom"> <!-- odpowiedz_na_kom znajduje się w views -->
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    {% endfor %}
 {% endblock %}

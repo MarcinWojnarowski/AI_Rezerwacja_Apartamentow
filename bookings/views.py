@@ -5,8 +5,8 @@ from django.urls import reverse
 from django.views.generic import ListView
 from datetime import timedelta, datetime
 from bookings.filters import ApartamentFilter
-from bookings.models import Apartament, Rezerwacja
-from bookings.forms import ApartamentForm
+from bookings.models import Apartament, Rezerwacja, Komentarz
+from bookings.forms import ApartamentForm, KomentarzForm
 from django.http import HttpResponseRedirect
 
 
@@ -36,9 +36,17 @@ def apartament_create(request):  # funkcja umożliwiająca tworzenie apartamentu
 
 def szczegoly_apartamentu(request, pk):
     apartament = Apartament.objects.get(pk=pk)
-    if request.method == 'POST':
-            return HttpResponseRedirect(apartament.get_absolute_url())
-    return render(request, 'apartament/apartament_detail.html', {'apartament': apartament})
+    if request.user.id == apartament.wlasciciel_id:
+        if request.method == 'POST':
+            form = ApartamentForm(request.POST)
+            if 'odpowiedz_na_kom' in form.data:  # odpowiedz_na_kom jest używane w htmlu apartament_detail
+                komentarz = Komentarz.objects.get(id=request.POST['kom_id'])
+                komentarz.odpowiedz = request.POST['odpowiedz']
+                komentarz.odpowiedz_data = datetime.now()
+                komentarz.save()
+                return HttpResponseRedirect(apartament.get_absolute_url())
+    komentarze = Komentarz.objects.filter(apartament_id=pk).order_by('-dodano_dnia')
+    return render(request, 'apartament/apartament_detail.html', {'apartament': apartament, 'komentarze':komentarze})
 
 
 def rezerwacje_apartamentow(request):
@@ -76,10 +84,10 @@ def rezerwacja(request, pk):
         r.rezerwacja_do = r.rezerwacja_od + timedelta(days=int(request.POST['days']))  # dodaje ilość zadeklarowanych dni do daty początkowej
         rr = Rezerwacja.objects.filter(apartament_id=pk)  # pobiera wszystie dotychczasowe rezerwacje tego apartamentu
         for rez in rr:  # iteruje po wszystkich rezerwacjach
-            if max(rez.rezerwacja_od,r.rezerwacja_od.date()) < min(rez.rezerwacja_do,r.rezerwacja_do.date()):  # sprawdzenie dostępności terminu
+            if max(rez.rezerwacja_od, r.rezerwacja_od.date()) < min(rez.rezerwacja_do, r.rezerwacja_do.date()):  # sprawdzenie dostępności terminu
                 messages.add_message(request, messages.WARNING, 'Ten termin jest zarezerwowany')
                 return HttpResponseRedirect(reverse('rezerwacja', kwargs={'pk': pk}))  # wraca na stronę rezerwacji termin jest wolny
-        r.apartament_id = pk  # pzypisane do nowej rezerwacji id tego apartamentu
+        r.apartament_id = pk  # przypisane do nowej rezerwacji id tego apartamentu
         r.kto_id = request.user.id  # przypisanie id osoby rezerwującej do rezerwacji
         r.save()
         messages.add_message(request, messages.SUCCESS, 'Przyjęto zgłoszenie, proszę oczekiwać na potwierdzenie od właściciela')
@@ -98,3 +106,19 @@ def rezerwacja(request, pk):
                 'color': color})
     rez_json = json.dumps(rez)  # konwersja tablicy na format json
     return render(request, 'booking/rezerwacja.html', {'apartment': apart, 'rez_json': rez_json})
+
+
+def dodaj_komentarz(request, pk):
+    form = KomentarzForm()
+    if request.method == 'POST':
+        form = KomentarzForm(request.POST)
+        if 'dodaj_komentarz' in form.data:
+            if form.is_valid():
+                komentarz = form.save(commit=False)
+                komentarz.autor_id = request.user.id
+                komentarz.apartament_id = pk
+                komentarz.dodano_dnia = datetime.now()
+                komentarz.save()
+                apart = Apartament.objects.get(pk=pk)
+                return HttpResponseRedirect(apart.get_absolute_url())
+    return render(request, 'booking/komentarz.html', {'form': form})

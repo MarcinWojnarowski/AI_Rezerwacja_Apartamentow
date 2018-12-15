@@ -6,6 +6,9 @@ class ApartamentForm(forms.ModelForm):
 
     class Meta:  # pola które będą wyświetlane w formularzu, podczas tworzenia nowego apartamentu
         model = models.Apartament
+        widgets = {
+          'opis': forms.Textarea(attrs={'rows': 3, 'cols': 30}),
+        }
         fields = [
             'miejscowosc',
             'adres',
@@ -16,4 +19,13 @@ class ApartamentForm(forms.ModelForm):
             'telewizor',
             'basen',
             'sauna',
+        ]
+
+
+class KomentarzForm(forms.ModelForm):
+
+    class Meta:
+        model = models.Komentarz
+        fields = [
+            'tresc_kom',
         ]

@@ -51,3 +51,24 @@ class Rezerwacja(models.Model):
                "Rezerwacja do"+self.rezerwacja_do.strftime('%d.%m.%y') +\
                " Id rezerwującego: "+str(self.kto.id) +\
                " Id apartamentu: "+str(self.apartament.id)
+
+
+class Komentarz(models.Model):
+    autor = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    apartament = models.ForeignKey(Apartament, on_delete=models.CASCADE)
+    tresc_kom = models.TextField()
+    dodano_dnia = models.DateField()
+    odpowiedz = models.TextField(null=True)
+    odpowiedz_data = models.DateField(null=True)
+
+    def __str__(self):
+        return "{autor} {apartament} {tresc_kom} {dodano_dnia} {odpowiedz}".format(
+            autor=self.autor,
+            apartament=self.apartament,
+            tresc_kom=self.tresc_kom,
+            dodano_dnia=self.dodano_dnia.strftime('%d.%m.%y'),
+            odpowiedz=self.odpowiedz,
+        )
+
+    def get_absolute_url(self):
+        return reverse('dodaj_komentarz', kwargs={'pk': self.pk})

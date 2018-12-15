@@ -2,7 +2,7 @@ from django.urls import path
 from django_filters.views import FilterView
 from bookings.filters import ApartamentFilter
 from bookings.views import ApartamentListView, UserApartament, apartament_create, szczegoly_apartamentu, \
-    rezerwacje_apartamentow, rezerwacja
+    rezerwacje_apartamentow, rezerwacja, dodaj_komentarz
 
 urlpatterns = [
     path('list/', ApartamentListView.as_view(), name='apartaments_list'),
@@ -13,4 +13,5 @@ urlpatterns = [
     path('search/', FilterView.as_view(filterset_class=ApartamentFilter,
                                        template_name='apartament/search.html'), name='search'),
     path('list/rezerwacja/<int:pk>/', rezerwacja, name='rezerwacja'),
+    path('list/komentarze/<int:pk>/', dodaj_komentarz, name='dodaj_komentarz'),
 ]
