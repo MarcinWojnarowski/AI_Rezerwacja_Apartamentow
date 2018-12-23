@@ -38,7 +38,7 @@ class RezerwacjaAdmin(admin.ModelAdmin):
         return obj.kto.first_name + ' ' + obj.kto.last_name
 
     apartament_adres.short_description = 'Adres apartamentu'
-    wlasciciel.short_description = 'Właściciel'
+    wlasciciel.short_description = 'Rezerwujący'
 
 
 class KomentarzeAdmin(admin.ModelAdmin):
