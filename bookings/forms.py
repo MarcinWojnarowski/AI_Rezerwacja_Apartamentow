@@ -26,6 +26,10 @@ class KomentarzForm(forms.ModelForm):
 
     class Meta:
         model = models.Komentarz
+        widgets = {
+          'tresc_kom': forms.Textarea(attrs={'rows': 3, 'cols': 30},)
+        }
+        labels = {'tresc_kom': 'Treść komentarza'}
         fields = [
             'tresc_kom',
         ]
