@@ -127,7 +127,11 @@ STATIC_URL = '/static/'
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
 # obsługa maili przy resetowaniu hasła
-EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
-EMAIL_FILE_PATH = os.path.join(BASE_DIR, "emails")
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'  # mail service smtp
+EMAIL_HOST_USER = 'rezerwacja.apartamentow@gmail.com'  # email id
+EMAIL_HOST_PASSWORD = 'rezerwacja2018'  # password
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
 # własny model użytkownika
 AUTH_USER_MODEL = 'accounts.MyUser'
